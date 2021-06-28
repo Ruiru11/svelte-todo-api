@@ -1,0 +1,19 @@
+{
+  "name": "svelte-todo-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ruiru11/svelte-todo-api.git"
+  },
+  "author": "ruiru11",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ruiru11/svelte-todo-api/issues"
+  },
+  "homepage": "https://github.com/Ruiru11/svelte-todo-api#readme"
+}
