@@ -4,11 +4,11 @@ const todoItemsSchema = new mongoose.Schema({
   task: {
     type: String,
     unique: true,
-    // required: true,
+    required: true,
   },
   description: {
     type: String,
-    // required: true,
+    required: true,
   },
   completed: {
     type: Boolean,

@@ -4,10 +4,11 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 const Todo = require("./endpoints/todo");
 
-const app =  express();
+const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
+app.use(express.json());
 
 mongoose.connect("mongodb://localhost:27017/svelte", {
   keepAlive: true,

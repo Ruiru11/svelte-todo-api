@@ -1,7 +1,8 @@
-const { createTodo } = require("../api/todo") ;
+import chalk from "chalk";
+
+const { createTodo } = require("../api/todo");
 
 export const CreateTodo = (req, res, next) => {
-    console.log("<><<<<<>>>",req.body)
   const todoData = {
     task: req.body.task,
     description: req.body.description,
@@ -11,7 +12,12 @@ export const CreateTodo = (req, res, next) => {
       res.status(201).json(response);
     })
     .catch((err) => {
-      res.status(400).json({ message: err.message });
+      if (err.name === "MongoError" && err.code === 11000) {
+        res.status(400).json({ message: "Todo item already exists" });
+      } else {
+        res.status(400).json({ message: err.message });
+      }
+
       next(err);
     });
 };
