@@ -6,6 +6,10 @@ const todoItemsSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   completed: {
     type: Boolean,
     default: false,
