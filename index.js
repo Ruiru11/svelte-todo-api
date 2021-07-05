@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 const Todo = require("./endpoints/todo");
 
+const swaggerUi = require("swagger-ui-express"),
+swaggerDocument = require("./swagger.json");
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +24,12 @@ mongoose.connection.on("open", function () {
 });
 
 app.use("/api/", Todo);
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
 
 app.listen(3000, () => {
   console.log("connected to server 3000");
