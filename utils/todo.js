@@ -4,6 +4,7 @@ const {
   getAsingleTodo,
   deleteTodoItem,
   updateTodoItem,
+  editTodoItem
 } = require("../api/todo");
 
 export const CreateTodo = (req, res, next) => {
@@ -17,9 +18,9 @@ export const CreateTodo = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "MongoError" && err.code === 11000) {
-        res.status(400).json({ message: "Todo item already exists" });
+        res.status(err.status).json({ message: "Todo item already exists" });
       } else {
-        res.status(400).json({ message: err.message });
+        res.status(err.status).json({ message: err.message });
       }
 
       next(err);
@@ -44,7 +45,7 @@ export const GetSingleTodo = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(400).json({ message: err.message });
+      res.status(err.status).json({ message: err.message });
       next(err);
     });
 };
@@ -56,7 +57,7 @@ export const DeleteTodoItem = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(400).json({ message: err.message });
+      res.status(err.status).json({ message: err.message });
       next(err);
     });
 };
@@ -68,7 +69,20 @@ export const UpdateTodoItem = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(400).json({ message: err.message });
+      res.status(err.status).json({ message: err.message });
       next(err);
     });
 };
+
+
+export const EditTodoItem = (req,res,next) => {
+  const id = req.params.id
+  editTodoItem(id.re.body)
+  .then((res) => {
+    res.status(200).json(res)
+  })
+  .catch((err) => {
+    res.status(err.status).json({ message: err.message });
+      next(err);
+  })
+}

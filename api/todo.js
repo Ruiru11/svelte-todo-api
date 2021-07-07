@@ -50,18 +50,32 @@ export async function deleteTodoItem(id) {
   }
 }
 
+export async function updateTodoItem(id) {
+  const todo = await Todo.findById(id);
+  if (todo) {
+    todo.completed = !todo.completed;
+    todo.save();
+    return todo;
+  } else {
+    throw {
+      status: 404,
+      message: "todo item not found",
+    };
+  }
+}
 
-export async function updateTodoItem(id){
-    const todo = await Todo.findById(id);
-    if(todo){
-        todo.completed = !todo.completed
-        todo.save();
-        return todo
-    } else {
-        throw{
-            status:404,
-            message:"todo item not found"
-        }
-    }
+export async function editTodoItem(id, params) {
+  const todo = await Todo.findById(id);
+  if (todo) {
+    todo.task = params.task;
+    todo.description = params.description;
 
+    todo.save();
+    return todo;
+  } else {
+    throw {
+      status: 404,
+      message: "todo item not found",
+    };
+  }
 }
