@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const Todo = require("./endpoints/todo");
+require('dotenv').config()
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/svelte", {
+mongoose.connect(process.env.MONGO_URL, {
   keepAlive: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
