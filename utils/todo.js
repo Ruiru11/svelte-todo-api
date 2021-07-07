@@ -32,7 +32,7 @@ export const GetTodo = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.json(400).json({ message: err.message });
+      res.status(400).json({ message: err.message });
       next(err);
     });
 };
@@ -44,7 +44,7 @@ export const GetSingleTodo = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.json(400).json({ message: err.message });
+      res.status(400).json({ message: err.message });
       next(err);
     });
 };
