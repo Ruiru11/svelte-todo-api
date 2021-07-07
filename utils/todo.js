@@ -78,11 +78,11 @@ export const UpdateTodoItem = (req, res, next) => {
 export const EditTodoItem = (req,res,next) => {
   const id = req.params.id
   editTodoItem(id,req.body)
-  .then((res) => {
-    res.status(200).json(res)
+  .then((response) => {
+    res.status(200).json(response)
   })
   .catch((err) => {
-    res.status(err.status).json({ message: err.message });
+    res.status(400).json({ message: err.message });
       next(err);
   })
 }
