@@ -6,8 +6,9 @@ const Todo = require("./endpoints/todo");
 import cors from 'cors';
 require('dotenv').config()
 
-app.use(cors);
+
 const app = express();
+ app.use(cors)
 
 app.use(express.urlencoded({ extended: true }));
 
