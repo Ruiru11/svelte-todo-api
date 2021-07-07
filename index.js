@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const Todo = require("./endpoints/todo");
+import cors from 'cors';
 require('dotenv').config()
 
+app.use(cors);
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
