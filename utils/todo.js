@@ -77,7 +77,7 @@ export const UpdateTodoItem = (req, res, next) => {
 
 export const EditTodoItem = (req,res,next) => {
   const id = req.params.id
-  editTodoItem(id.re.body)
+  editTodoItem(id,req.body)
   .then((res) => {
     res.status(200).json(res)
   })
