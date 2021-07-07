@@ -66,10 +66,10 @@ export async function updateTodoItem(id) {
 
 export async function editTodoItem(id, params) {
   const todo = await Todo.findById(id);
+  console.log("params",params)
   if (todo) {
     todo.task = params.task;
     todo.description = params.description;
-
     todo.save();
     return todo;
   } else {
