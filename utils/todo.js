@@ -32,7 +32,7 @@ export const GetTodo = (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(400).json({ message: err.message });
+      res.status(err.status).json({ message: err.message });
       next(err);
     });
 };
