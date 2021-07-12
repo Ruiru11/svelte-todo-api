@@ -4,7 +4,8 @@ const {
   getAsingleTodo,
   deleteTodoItem,
   updateTodoItem,
-  editTodoItem
+  editTodoItem,
+  getMetrics
 } = require("../api/todo");
 
 export const CreateTodo = (req, res, next) => {
@@ -82,7 +83,18 @@ export const EditTodoItem = (req,res,next) => {
     res.status(200).json(response)
   })
   .catch((err) => {
-    res.status(400).json({ message: err.message });
+    res.status(err.status).json({ message: err.message });
       next(err);
+  })
+}
+
+
+export const GetMetrics = (req,res,next) => {
+  getMetrics()
+  .then((response) => {
+    res.status(200).json(response)
+  })
+  .catch((err) => {
+    res.status(err.status).json({message:err.message})
   })
 }

@@ -79,3 +79,20 @@ export async function editTodoItem(id, params) {
     };
   }
 }
+
+
+export async function getMetrics(){
+  const todos = await Todo.find();
+  if(todos.length === 0){
+    throw {
+      status:200,
+      message:"No todo item stats"
+    }
+  }else {
+    const completedTodo = todos.filter((todo) => todo.completed === true)
+    const pendingTodo = todos.filter((todo) => todo.completed === false)
+
+    return {done:completedTodo.length,pending:pendingTodo.length}
+  }
+
+}
