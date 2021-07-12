@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const Todo = require("./endpoints/todo");
+const Users =  require("./api/users");
 require('dotenv').config()
 
 const app = express();
@@ -22,6 +23,8 @@ mongoose.connection.on("open", function () {
 });
 
 app.use("/api/", Todo);
+app.use("/api/auth", Users);
+
 
 app.listen(3000, () => {
   console.log("connected to server 3000");
