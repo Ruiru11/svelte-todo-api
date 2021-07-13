@@ -82,7 +82,7 @@ router.post("/login", (req, res) => {
 
 router.get(
   "/all",
-  passport.authenticate("jwt", { session: false }),
+//   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
     User.find(function (err, user) {
       if (err) {

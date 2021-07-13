@@ -12,6 +12,7 @@ export const CreateTodo = (req, res, next) => {
   const todoData = {
     task: req.body.task,
     description: req.body.description,
+    User:req.user._id
   };
   createTodo(todoData)
     .then((response) => {
@@ -19,9 +20,9 @@ export const CreateTodo = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "MongoError" && err.code === 11000) {
-        res.status(err.status).json({ message: "Todo item already exists" });
+        res.status(400).json({ message: "Todo item already exists" });
       } else {
-        res.status(err.status).json({ message: err.message });
+        res.status(400).json({ message: err.message });
       }
 
       next(err);
@@ -29,7 +30,8 @@ export const CreateTodo = (req, res, next) => {
 };
 
 export const GetTodo = (req, res, next) => {
-  getTodo()
+  const id = req.user._id;
+  getTodo(id)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -90,11 +92,13 @@ export const EditTodoItem = (req,res,next) => {
 
 
 export const GetMetrics = (req,res,next) => {
-  getMetrics()
+  const _id = req.user._id;
+  getMetrics(_id)
   .then((response) => {
     res.status(200).json(response)
   })
   .catch((err) => {
     res.status(err.status).json({message:err.message})
+    next(err)
   })
 }

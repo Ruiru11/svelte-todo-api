@@ -13,8 +13,11 @@ export async function createTodo(todoData) {
   }
 }
 
-export async function getTodo() {
-  const todos = await Todo.find();
+export async function getTodo(_id) {
+  const todos = await Todo.find({ User: _id }).populate("User", [
+    "username",
+    "email",
+  ]);
   if (todos.length === 0) {
     throw {
       status: 200,
@@ -66,7 +69,6 @@ export async function updateTodoItem(id) {
 
 export async function editTodoItem(id, params) {
   const todo = await Todo.findById(id);
-  console.log("params",params)
   if (todo) {
     todo.task = params.task;
     todo.description = params.description;
@@ -80,19 +82,17 @@ export async function editTodoItem(id, params) {
   }
 }
 
-
-export async function getMetrics(){
-  const todos = await Todo.find();
-  if(todos.length === 0){
+export async function getMetrics(_id) {
+  const todos = await Todo.find({ author: _id });
+  if (todos.length === 0) {
     throw {
-      status:200,
-      message:"No todo item stats"
-    }
-  }else {
-    const completedTodo = todos.filter((todo) => todo.completed === true)
-    const pendingTodo = todos.filter((todo) => todo.completed === false)
+      status: 200,
+      message: "No todo item stats",
+    };
+  } else {
+    const completedTodo = todos.filter((todo) => todo.completed === true);
+    const pendingTodo = todos.filter((todo) => todo.completed === false);
 
-    return {done:completedTodo.length,pending:pendingTodo.length}
+    return { done: completedTodo.length, pending: pendingTodo.length };
   }
-
 }

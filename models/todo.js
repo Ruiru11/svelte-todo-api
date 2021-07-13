@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const todoItemsSchema = new mongoose.Schema({
+const todoItemsSchema = new Schema({
   task: {
     type: String,
     unique: true,
@@ -10,12 +11,14 @@ const todoItemsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  User: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   completed: {
     type: Boolean,
     default: false,
   },
 });
 
-const todoModel = mongoose.model("Todo", todoItemsSchema);
-
-module.exports = todoModel;
+module.exports = mongoose.model("Todo", todoItemsSchema);
