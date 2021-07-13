@@ -43,4 +43,20 @@ router.post("/registration", (req, res) => {
 });
 
 
+router.get(
+    "/all",
+    passport.authenticate("jwt", { session: false }),
+    (req, res, next) => {
+      User.find(function(err, user) {
+        if (err) {
+          var err = new Error("error occured");
+          return next(err);
+        }
+        res
+          .status(200)
+          .json({ message: "All users retrived successfully", user });
+      });
+    }
+  );
+
 module.exports = router;
