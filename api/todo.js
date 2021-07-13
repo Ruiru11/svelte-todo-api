@@ -83,7 +83,7 @@ export async function editTodoItem(id, params) {
 }
 
 export async function getMetrics(_id) {
-  const todos = await Todo.find({ author: _id });
+  const todos = await Todo.find({ User: _id });
   if (todos.length === 0) {
     throw {
       status: 200,
