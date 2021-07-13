@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_LOCAL, {
+mongoose.connect(process.env.MONGO_URL, {
   keepAlive: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
