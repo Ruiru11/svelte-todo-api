@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const validateLoginData = require("../validation/login");
 const validateRegistrationData = require("../validation/register");
 const User = require("../models/user");
@@ -42,21 +43,57 @@ router.post("/registration", (req, res) => {
   });
 });
 
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginData(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  const email = req.body.email;
+  const password = req.body.password;
+  User.findOne({ email }).then((user) => {
+    if (!user) {
+      return res.status(404).json({ message: "user with that email not found" });
+    }
+    bcrypt.compare(password, user.password).then((isMatch) => {
+      if (isMatch) {
+        const payload = {
+          id: user.id,
+          username: user.username,
+        };
+        jwt.sign(
+          payload,
+          "secrets",
+          {
+            expiresIn: 31556926,
+          },
+          (err, token) => {
+            res.json({
+              sucess: true,
+              token: "Bearer " + token,
+            });
+          }
+        );
+      } else {
+        return res.status(400).json({ message: "incorrect password" });
+      }
+    });
+  });
+});
 
 router.get(
-    "/all",
-    passport.authenticate("jwt", { session: false }),
-    (req, res, next) => {
-      User.find(function(err, user) {
-        if (err) {
-          var err = new Error("error occured");
-          return next(err);
-        }
-        res
-          .status(200)
-          .json({ message: "All users retrived successfully", user });
-      });
-    }
-  );
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    User.find(function (err, user) {
+      if (err) {
+        var err = new Error("error occured");
+        return next(err);
+      }
+      res
+        .status(200)
+        .json({ message: "All users retrived successfully", user });
+    });
+  }
+);
 
 module.exports = router;
