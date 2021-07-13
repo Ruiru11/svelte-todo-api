@@ -7,6 +7,10 @@ const todoItemsSchema = new Schema({
     unique: true,
     required: true,
   },
+  duration: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,

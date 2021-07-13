@@ -12,6 +12,7 @@ export const CreateTodo = (req, res, next) => {
   const todoData = {
     task: req.body.task,
     description: req.body.description,
+    duration:req.body.duration,
     User:req.user._id
   };
   createTodo(todoData)
