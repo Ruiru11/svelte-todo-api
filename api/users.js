@@ -34,6 +34,7 @@ router.post("/registration", (req, res) => {
               res.json({
                 message: "User created successfully",
                 user,
+                status:201
               });
             })
             .catch((err) => console.log(err));
